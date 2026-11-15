@@ -1,80 +1,173 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#14264c">
-  <meta name="description" content="ANSI B16.5 flange dimension viewer for Class 150 and Class 300.">
-
-  <title>ANSI B16.5 Flange Dimension Viewer</title>
-
+  <meta name="theme-color" content="#080a08">
+  <meta name="description" content="A practical ANSI B16.5 flange dimension reference. Select nominal pipe size, pressure class and flange configuration to view engineering dimensions in millimetres.">
+  <title>FlangeRef — Engineering Dimensions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
+  <script src="./data.js" defer></script>
+  <script src="./app.js" defer></script>
 </head>
-
 <body>
-  <main class="wrap">
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#home" aria-label="FlangeRef home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="7"/>
+          <path d="M20 1.5v6M20 32.5v6M1.5 20h6M32.5 20h6M6.9 6.9l4.3 4.3m17.6 17.6 4.3 4.3m0-26.2-4.3 4.3m-17.6 17.6-4.3 4.3"/>
+        </svg>
+      </span>
+      <span class="brand-copy"><strong>FLANGE<span>REF</span></strong><small>ENGINEERING DIMENSIONS</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav"><span></span><span></span></button>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#explorer">Dimension Finder</a>
+      <a href="#standard">Standard</a>
+      <a href="#notes">Reference Notes</a>
+      <a class="nav-cta" href="#explorer">Explore dimensions <span>↗</span></a>
+    </nav>
+  </header>
 
-    <header class="hero">
-      <div class="eyebrow">ENGINEERING DIMENSION REFERENCE</div>
-
-      <h1>Flange Dimension Viewer</h1>
-
-      <p>ANSI B16.5 · Class 150 &amp; Class 300 · Dimensions in mm</p>
-
-      <span class="tag">42 Dimension Records · 21 Nominal Sizes × 2 Classes</span>
-    </header>
-
-    <section class="panel" aria-labelledby="selectionTitle">
-
-      <h2 class="section-title" id="selectionTitle">
-        Select Flange Dimensions
-      </h2>
-
-      <div class="controls">
-
-        <div class="field">
-          <label for="sizeSelect">1. Nominal Pipe Size</label>
-
-          <select id="sizeSelect">
-            <option value="">Select Size (Inch / NB)</option>
-          </select>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-line"></span> ENGINEERING DATA <i></i> ANSI B16.5</div>
+        <h1>Dimensions<br>that <em>fit.</em><br><span class="outline-text">Decisions</span><br><em>that hold.</em></h1>
+        <p class="hero-lead">A clear, practical flange dimension reference for engineers, designers and procurement teams. Select your parameters and find the measurements you need.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#explorer">Find flange dimensions <span>↗</span></a>
+          <a class="button button-ghost" href="#standard">Explore the reference <span>↓</span></a>
         </div>
-
-        <div class="field">
-          <label for="classSelect">2. Flange Class</label>
-
-          <select id="classSelect" disabled>
-            <option value="">First Select Pipe Size</option>
-            <option value="150">Class 150</option>
-            <option value="300">Class 300</option>
-          </select>
-        </div>
-
       </div>
 
-      <p class="hint">
-        First select the Nominal Pipe Size (Inch / NB), then choose
-        Class 150 or Class 300 to view the flange dimensions.
-      </p>
-
-    </section>
-
-    <section class="results" id="result" aria-live="polite">
-
-      <div class="empty">
-        <b>Select a Flange Size</b>
-        Choose a nominal pipe size and flange class to view the dimensions.
+      <div class="hero-visual" aria-label="Technical illustration of a pipe flange">
+        <div class="visual-index">FIG. 01 <span>FLANGE / FRONT VIEW</span></div>
+        <svg class="flange-drawing" viewBox="0 0 540 500" role="img" aria-label="Technical line drawing of a flange with bolt holes">
+          <defs>
+            <radialGradient id="flangeFill"><stop offset="0" stop-color="#242b21"/><stop offset=".65" stop-color="#171c16"/><stop offset="1" stop-color="#0d100d"/></radialGradient>
+            <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <g transform="translate(270 250)">
+            <circle r="186" fill="url(#flangeFill)" stroke="#526044" stroke-width="1.5"/>
+            <circle r="169" fill="none" stroke="#7ec43a" stroke-opacity=".72" stroke-width="1.4"/>
+            <circle r="137" fill="none" stroke="#4d5b43" stroke-width="1.2" stroke-dasharray="4 7"/>
+            <circle r="92" fill="#090d09" stroke="#7ec43a" stroke-opacity=".8" stroke-width="2"/>
+            <circle r="72" fill="#050705" stroke="#4c6040" stroke-width="1.2"/>
+            <circle r="52" fill="none" stroke="#293526" stroke-width="1"/>
+            <g fill="#090d09" stroke="#91cf56" stroke-width="2" filter="url(#greenGlow)">
+              <circle cx="0" cy="-154" r="11"/><circle cx="109" cy="-109" r="11"/><circle cx="154" cy="0" r="11"/><circle cx="109" cy="109" r="11"/>
+              <circle cx="0" cy="154" r="11"/><circle cx="-109" cy="109" r="11"/><circle cx="-154" cy="0" r="11"/><circle cx="-109" cy="-109" r="11"/>
+            </g>
+            <path d="M-220 0H220M0-220V220" stroke="#516044" stroke-opacity=".5" stroke-dasharray="3 8"/>
+            <circle r="5" fill="#a4d95f"/>
+          </g>
+          <path d="M78 398H170L203 365" fill="none" stroke="#7ec43a" stroke-width="1.3"/>
+          <circle cx="203" cy="365" r="3" fill="#a4d95f"/>
+          <text x="76" y="418" class="svg-label">BOLT CIRCLE</text>
+          <path d="M361 77H439L466 104" fill="none" stroke="#7ec43a" stroke-width="1.3"/>
+          <circle cx="466" cy="104" r="3" fill="#a4d95f"/>
+          <text x="361" y="64" class="svg-label">ANSI B16.5</text>
+        </svg>
+        <div class="visual-caption"><span class="status-dot"></span> TECHNICAL REFERENCE <b>MM</b></div>
       </div>
 
+      <div class="hero-stats" aria-label="Reference coverage">
+        <div class="stat"><strong>42</strong><span>Dimension records</span></div>
+        <div class="stat"><strong>21</strong><span>Nominal pipe sizes</span></div>
+        <div class="stat"><strong>02</strong><span>Pressure classes</span></div>
+        <div class="stat-note">Clear data.<br><b>Confident decisions.</b></div>
+      </div>
     </section>
 
-    <footer class="footer">
-      ANSI B16.5 Flange Dimensions · All dimensions are in millimeters (mm).
-    </footer>
+    <div class="ticker" aria-hidden="true"><div class="ticker-track">
+      <span>ANSI B16.5</span><i>✳</i><span>CLASS 150</span><i>✳</i><span>CLASS 300</span><i>✳</i><span>FLANGE DIMENSIONS</span><i>✳</i><span>ALL VALUES IN MM</span><i>✳</i>
+      <span>ANSI B16.5</span><i>✳</i><span>CLASS 150</span><i>✳</i><span>CLASS 300</span><i>✳</i><span>FLANGE DIMENSIONS</span><i>✳</i><span>ALL VALUES IN MM</span><i>✳</i>
+    </div></div>
 
+    <section class="explorer-section section-wrap" id="explorer">
+      <div class="section-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> DIMENSION EXPLORER</div><h2>Find your flange<br><em>specifications.</em></h2></div>
+        <p>Choose a nominal pipe size, pressure class and flange configuration. The matching reference dimensions will appear instantly below.</p>
+      </div>
+
+      <div class="finder-panel">
+        <div class="finder-top">
+          <div><span class="step-label">01 / SELECT PARAMETERS</span><h3>Configure your reference</h3></div>
+          <span class="live-indicator"><i></i><span id="dataStatus">LOADING REFERENCE DATA</span></span>
+        </div>
+        <div class="controls">
+          <div class="field">
+            <label for="sizeSelect">Nominal pipe size <small>INCH / NB</small></label>
+            <select id="sizeSelect" name="size" autocomplete="off"><option value="">Loading sizes…</option></select>
+          </div>
+          <div class="field">
+            <label for="classSelect">Pressure class <small>ASME CLASS</small></label>
+            <select id="classSelect" name="pressureClass" autocomplete="off" disabled><option value="">Select size first</option></select>
+          </div>
+          <div class="field">
+            <label for="typeSelect">Flange type <small>CONFIGURATION</small></label>
+            <select id="typeSelect" name="flangeType" autocomplete="off"><option value="all">All dimensions</option></select>
+          </div>
+        </div>
+        <p class="finder-hint"><span>ⓘ</span> Choose a size and class to load dimensions. All dimensional values are shown in millimetres (mm).</p>
+      </div>
+
+      <section class="results" id="result" aria-live="polite" aria-atomic="true">
+        <div class="empty"><div class="empty-icon">⌖</div><b>Your dimensions will appear here</b><span>Choose a nominal pipe size and pressure class above to get started.</span></div>
+      </section>
+    </section>
+
+    <section class="standard-section" id="standard">
+      <div class="section-wrap standard-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> ENGINEERING REFERENCE</div>
+          <h2>Built around a<br><em>recognised standard.</em></h2>
+          <p>This viewer organises the supplied flange dimension reference for ANSI B16.5, covering Class 150 and Class 300. Use it as a quick lookup aid alongside the applicable controlled engineering standard and project documentation.</p>
+          <a class="button button-outline" href="#explorer">Open dimension finder <span>↗</span></a>
+        </div>
+        <div class="standard-card">
+          <div class="standard-card-top"><span>REFERENCE STANDARD</span><b>ASME</b></div>
+          <div class="standard-number">B16.5</div>
+          <div class="standard-name">PIPE FLANGES AND FLANGED FITTINGS</div>
+          <div class="standard-rule"></div>
+          <div class="standard-meta">
+            <div><small>PRESSURE CLASSES</small><b>150 / 300</b></div>
+            <div><small>DIMENSION UNIT</small><b>Millimetres (mm)</b></div>
+            <div><small>PIPE SIZE RANGE</small><b>½″ – 24″</b></div>
+            <div><small>DATA RECORDS</small><b>42 dimensions sets</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="notes-section section-wrap" id="notes">
+      <div class="eyebrow"><span class="eyebrow-line"></span> IMPORTANT INFORMATION</div>
+      <div class="notes-grid">
+        <div><h2>Reference<br><em>notes.</em></h2><p>Keep these source notes in mind when reviewing the displayed values.</p></div>
+        <div class="note-list">
+          <article><span>01</span><div><h3>Raised face</h3><p>The 1.6 mm raised face is included in the thickness and length of the flange, as stated in the source reference.</p></div></article>
+          <article><span>02</span><div><h3>Welding neck dimension</h3><p>The marked dimension denotes the outside diameter (O.D.) of the pipe in a welding neck flange.</p></div></article>
+          <article><span>03</span><div><h3>ANSI B16.5 coverage</h3><p>The 22″ size is marked in the source as not covered by ANSI B16.5. Check the applicable standard before using it for design or procurement.</p></div></article>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="./app.js" defer></script>
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="7"/><path d="M20 1.5v6M20 32.5v6M1.5 20h6M32.5 20h6M6.9 6.9l4.3 4.3m17.6 17.6 4.3 4.3m0-26.2-4.3 4.3m-17.6 17.6-4.3 4.3"/></svg></span><span class="brand-copy"><strong>FLANGE<span>REF</span></strong><small>ENGINEERING DIMENSIONS</small></span></a>
+      <p>A straightforward engineering reference for flange dimensions.</p>
+      <a class="back-top" href="#home">BACK TO TOP ↑</a>
+    </div>
+    <div class="footer-bottom"><span>ANSI B16.5 · CLASS 150 &amp; CLASS 300</span><span>All dimensions in millimetres (mm) · Verify against the governing standard before use.</span></div>
+  </footer>
 </body>
 </html>
